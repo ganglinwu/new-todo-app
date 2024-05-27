@@ -1,5 +1,10 @@
 import { ListPlus } from "lucide-react";
 import { ScrollArea } from "../../@/components/ui/scroll-area.tsx";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../../@/components/ui/hover-card.tsx";
 
 import { projects } from "../demoData/demoProjects.ts";
 
@@ -24,9 +29,21 @@ export default function Sidebar({ demoProjects }: sidebarProps) {
         </div>
         <div className="bg-secondary">
           {demoProjects.map((project) => (
-            <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
-              {project.projectName}
-            </h4>
+            <div className="hover:bg-accent transition-colors">
+              <HoverCard>
+                <HoverCardTrigger>
+                  <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
+                    {project.projectName}
+                  </h4>
+                </HoverCardTrigger>
+                <HoverCardContent className="bg-white z-60">
+                  <h6>Tasks:</h6>
+                  {project.tasks.map((task) => (
+                    <div>{task.taskName}</div>
+                  ))}
+                </HoverCardContent>
+              </HoverCard>
+            </div>
           ))}
         </div>
       </ScrollArea>
