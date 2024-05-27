@@ -1,9 +1,13 @@
 import { ListPlus } from "lucide-react";
 import { ScrollArea } from "../../@/components/ui/scroll-area.tsx";
 
-import { demoProjects } from "../demoData/demoProjects.ts";
+import { projects } from "../demoData/demoProjects.ts";
 
-export default function Sidebar() {
+type sidebarProps = {
+  demoProjects: projects[];
+};
+
+export default function Sidebar({ demoProjects }: sidebarProps) {
   return (
     <div className="p-4 md:p-6 lg:p-8">
       <ScrollArea className="shadow-xl border border-border rounded-l">
