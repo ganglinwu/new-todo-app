@@ -1,3 +1,7 @@
-export default function MainContent() {
-  return <div>Placeholder for Main Content</div>;
+type mainContentProps = {
+  selectedProject: string;
+};
+
+export default function MainContent({ selectedProject }: mainContentProps) {
+  return <div>{selectedProject}</div>;
 }

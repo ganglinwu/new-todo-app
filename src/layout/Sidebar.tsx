@@ -10,9 +10,15 @@ import { projects } from "../demoData/demoProjects.ts";
 
 type sidebarProps = {
   demoProjects: projects[];
+  selectedProject: string;
+  onSelect: (selectedProject: string) => void;
 };
 
-export default function Sidebar({ demoProjects }: sidebarProps) {
+export default function Sidebar({
+  demoProjects,
+  selectedProject,
+  onSelect,
+}: sidebarProps) {
   return (
     <div className="p-4 md:p-6 lg:p-8">
       <ScrollArea className="shadow-xl border border-border rounded-l">
@@ -29,7 +35,10 @@ export default function Sidebar({ demoProjects }: sidebarProps) {
         </div>
         <div className="bg-secondary">
           {demoProjects.map((project) => (
-            <div className="hover:bg-accent transition-colors">
+            <div
+              className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
+              onClick={() => onSelect(project.projectName)}
+            >
               <HoverCard>
                 <HoverCardTrigger>
                   <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
