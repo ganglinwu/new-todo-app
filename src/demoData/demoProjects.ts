@@ -1,4 +1,4 @@
-type task = {
+export type task = {
   taskName: string;
   taskDueDate?: Date;
   taskDuration?: number;

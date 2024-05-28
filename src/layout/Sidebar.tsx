@@ -7,6 +7,8 @@ import {
 } from "../../@/components/ui/hover-card.tsx";
 
 import { projects } from "../demoData/demoProjects.ts";
+import bgColourByUrgencyExpiry from "../utils/bgColourByUrgencyExpiry.ts";
+import isTaskExpired from "../utils/isTaskExpired.ts";
 
 type sidebarProps = {
   demoProjects: projects[];
@@ -48,7 +50,11 @@ export default function Sidebar({
                 <HoverCardContent className="bg-white z-60">
                   <h6>Tasks:</h6>
                   {project.tasks.map((task) => (
-                    <div>{task.taskName}</div>
+                    <div
+                      className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
+                    >
+                      {task.taskName}
+                    </div>
                   ))}
                 </HoverCardContent>
               </HoverCard>
