@@ -1,3 +1,4 @@
+// layout component imports
 import Header from "./layout/Header";
 import MainContent from "./layout/MainContent";
 import Sidebar from "./layout/Sidebar";
@@ -21,7 +22,10 @@ function App() {
           ></Sidebar>
         </div>
         <div className="col-span-2 md:col-span-3">
-          <MainContent selectedProject={selectedProject}></MainContent>
+          <MainContent
+            demoProject={demoProjects}
+            selectedProject={selectedProject}
+          ></MainContent>
         </div>
       </div>
     </div>
