@@ -9,19 +9,23 @@ import {
 import { projects } from "../../../demoData/demoProjects.ts";
 import bgColourByUrgencyExpiry from "../../../utils/bgColourByUrgencyExpiry.ts";
 import isTaskExpired from "../../../utils/isTaskExpired.ts";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "../../../../@/components/ui/popover.tsx";
+import AddProject from "../../addProject/AddProject.tsx";
 
 type projectScrollAreaProps = {
   demoProjects: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
-  onAddProject: (arg0: boolean) => void;
 };
 
 export default function ProjectScrollArea({
   demoProjects,
   selectedProject,
   onSelect,
-  onAddProject,
 }: projectScrollAreaProps) {
   return (
     <ScrollArea className="shadow-xl border border-border rounded-l">
@@ -29,13 +33,19 @@ export default function ProjectScrollArea({
         <h4 className="font-light text-xs md:text-lg lg:text-2xl self-center">
           Add Project
         </h4>
-        <button
-          type="button"
-          className="flex items-center aspect-square w-5 md:w-8 lg:w-10"
-          onClick={() => onAddProject(true)}
-        >
-          <ListPlus></ListPlus>
-        </button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="flex items-center aspect-square w-5 md:w-8 lg:w-10"
+            >
+              <ListPlus></ListPlus>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="transition-transform">
+            <AddProject></AddProject>
+          </PopoverContent>
+        </Popover>
       </div>
       <div className="bg-secondary">
         {demoProjects.map((project) => (
