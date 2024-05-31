@@ -3,17 +3,17 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../@/components/ui/popover.tsx";
+} from "../../../@/components/ui/popover.tsx";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../@/components/ui/card.tsx";
+} from "../../../@/components/ui/card.tsx";
 
 // type import
-import { projects } from "../demoData/demoProjects.ts";
+import { projects } from "../../demoData/demoProjects.ts";
 
 type mainContentProps = {
   demoProject: projects[];
@@ -21,8 +21,8 @@ type mainContentProps = {
 };
 
 // util import
-import bgColourByUrgencyExpiry from "../utils/bgColourByUrgencyExpiry.ts";
-import isTaskExpired from "../utils/isTaskExpired.ts";
+import bgColourByUrgencyExpiry from "../../utils/bgColourByUrgencyExpiry.ts";
+import isTaskExpired from "../../utils/isTaskExpired.ts";
 
 export default function MainContent({
   demoProject,

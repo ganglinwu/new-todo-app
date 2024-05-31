@@ -1,7 +1,7 @@
 // layout component imports
-import Header from "./layout/Header";
-import MainContent from "./layout/MainContent";
-import Sidebar from "./layout/Sidebar";
+import Header from "./layout/header/Header.tsx";
+import MainContent from "./layout/maincontent/MainContent.tsx";
+import Sidebar from "./layout/sidebar/Sidebar.tsx";
 
 import { demoProjects } from "./demoData/demoProjects";
 import { useState } from "react";
