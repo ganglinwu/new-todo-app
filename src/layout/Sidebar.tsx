@@ -38,6 +38,7 @@ export default function Sidebar({
         <div className="bg-secondary">
           {demoProjects.map((project) => (
             <div
+              key={project.projectName}
               className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
               onClick={() => onSelect(project.projectName)}
             >
@@ -51,6 +52,7 @@ export default function Sidebar({
                   <h6>Tasks:</h6>
                   {project.tasks.map((task) => (
                     <div
+                      key={task.taskName}
                       className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
                     >
                       {task.taskName}
