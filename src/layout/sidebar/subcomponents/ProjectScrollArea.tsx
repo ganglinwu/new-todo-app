@@ -14,12 +14,14 @@ type projectScrollAreaProps = {
   demoProjects: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
+  onAddProject: (arg0: boolean) => void;
 };
 
 export default function ProjectScrollArea({
   demoProjects,
   selectedProject,
   onSelect,
+  onAddProject,
 }: projectScrollAreaProps) {
   return (
     <ScrollArea className="shadow-xl border border-border rounded-l">
@@ -30,6 +32,7 @@ export default function ProjectScrollArea({
         <button
           type="button"
           className="flex items-center aspect-square w-5 md:w-8 lg:w-10"
+          onClick={() => onAddProject(true)}
         >
           <ListPlus></ListPlus>
         </button>
@@ -47,7 +50,7 @@ export default function ProjectScrollArea({
                   {project.projectName}
                 </h4>
               </HoverCardTrigger>
-              <HoverCardContent className="bg-white z-60">
+              <HoverCardContent className="bg-white">
                 <h6>Tasks:</h6>
                 {project.tasks.map((task) => (
                   <div
