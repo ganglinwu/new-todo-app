@@ -3,17 +3,17 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../@/components/ui/popover.tsx";
+} from "../../../@/components/ui/popover.tsx";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../@/components/ui/card.tsx";
+} from "../../../@/components/ui/card.tsx";
 
 // type import
-import { projects } from "../demoData/demoProjects.ts";
+import { projects } from "../../demoData/demoProjects.ts";
 
 type mainContentProps = {
   demoProject: projects[];
@@ -21,8 +21,8 @@ type mainContentProps = {
 };
 
 // util import
-import bgColourByUrgencyExpiry from "../utils/bgColourByUrgencyExpiry.ts";
-import isTaskExpired from "../utils/isTaskExpired.ts";
+import bgColourByUrgencyExpiry from "../../utils/bgColourByUrgencyExpiry.ts";
+import isTaskExpired from "../../utils/isTaskExpired.ts";
 
 export default function MainContent({
   demoProject,
@@ -40,7 +40,7 @@ export default function MainContent({
       </div>
       <div className="grid md:grid-cols-magic md:gap-4 grid-cols-magicSmallScreen gap-1 text-xs md:text-lg lg:text-lg">
         {demoProject.map((project) => (
-          <Card>
+          <Card key={project.projectName}>
             <CardHeader>
               <CardTitle className="p-2">{project.projectName}</CardTitle>
               <CardDescription></CardDescription>
@@ -59,14 +59,8 @@ export default function MainContent({
                   <div>Duration: {task.taskDuration} minutes</div>
                   <div>Urgency: {task.taskUrgency}</div>
                   <Popover>
-                    <PopoverTrigger>
-                      <button
-                        type="button"
-                        className="border hover:bg-accent bg-secondary rounded-xl outline-none shadow-lg p-1 md:p-1 lg:p-2"
-                      >
-                        {" "}
-                        Edit Task{" "}
-                      </button>
+                    <PopoverTrigger className="border hover:bg-accent bg-secondary rounded-xl outline-none shadow-lg p-1 md:p-1 lg:p-2">
+                      Edit Task{" "}
                     </PopoverTrigger>
                     <PopoverContent>Placeholder</PopoverContent>
                   </Popover>

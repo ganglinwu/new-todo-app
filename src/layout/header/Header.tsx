@@ -1,4 +1,4 @@
-import logo from "../../public/1.webp";
+import logo from "../../../public/1.webp";
 
 export default function Header() {
   return (
