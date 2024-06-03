@@ -30,29 +30,40 @@ export default function RenderProjectsIntoMainContent({
   selectedProject,
 }: RenderProjectsIntoMainContentProps) {
   return (
-    <div className="grid md:grid-cols-magic md:gap-4 grid-cols-magicSmallScreen gap-1 text-xs md:text-lg lg:text-lg">
+    <div className="grid md:grid-cols-magic md:gap-4 grid-cols-magicSmallScreen gap-2 mr-4 text-xs md:text-lg lg:text-2xl">
       {demoProject.map((project) => (
         <Card
           key={project.projectName}
-          className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"}`}
+          className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"} border-none`}
         >
           <CardHeader>
-            <CardTitle className="p-2">{project.projectName}</CardTitle>
+            <CardTitle className="ml-2 mt-2 p-2 self-center">
+              {project.projectName}
+            </CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
           <CardContent>
             {project.tasks.map((task) => (
               <div
                 key={task.taskName}
-                className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
+                className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent rounded-xl mb-2 md:mb-4 shadow-xl`}
               >
-                <div>Task: {task.taskName}</div>
-                <div>
-                  Due Date:{" "}
-                  {task.taskDueDate ? task.taskDueDate.toString() : ""}
+                <div className="p-2">
+                  Task: <span className="font-thin">{task.taskName}</span>
                 </div>
-                <div>Duration: {task.taskDuration} minutes</div>
-                <div>Urgency: {task.taskUrgency}</div>
+                <div className="p-2">
+                  Due Date:{" "}
+                  <span className="font-thin">
+                    {task.taskDueDate ? task.taskDueDate.toString() : ""}
+                  </span>
+                </div>
+                <div className="p-2">
+                  Duration:{" "}
+                  <span className="font-thin">{task.taskDuration} minutes</span>
+                </div>
+                <div className="p-2">
+                  Urgency: <span className="font-thin">{task.taskUrgency}</span>
+                </div>
                 <Popover>
                   <PopoverTrigger className="border hover:bg-accent bg-secondary rounded-xl outline-none shadow-lg p-1 md:p-1 lg:p-2">
                     Edit Task
