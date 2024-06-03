@@ -48,6 +48,14 @@ export default function ProjectScrollArea({
         </Popover>
       </div>
       <div className="bg-secondary">
+        <div
+          className={`${selectedProject === "All Projects" ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
+          onClick={() => onSelect("All Projects")}
+        >
+          <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
+            All Projects
+          </h4>
+        </div>
         {demoProjects.map((project) => (
           <div
             key={project.projectName}

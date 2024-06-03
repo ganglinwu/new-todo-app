@@ -7,9 +7,7 @@ import { demoProjects } from "./demoData/demoProjects";
 import { useState } from "react";
 
 function App() {
-  const [selectedProject, setSelectedProject] = useState(
-    demoProjects[0].projectName,
-  );
+  const [selectedProject, setSelectedProject] = useState("All Projects");
   return (
     <div className="flex flex-col relative z-1">
       <Header></Header>

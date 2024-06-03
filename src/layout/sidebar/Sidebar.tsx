@@ -5,7 +5,6 @@ type sidebarProps = {
   demoProjects: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
-  onAddProject: (arg0: boolean) => void;
 };
 
 export default function Sidebar({
