@@ -2,19 +2,19 @@
 import { projects } from "../../demoData/demoProjects.ts";
 
 type mainContentProps = {
-  demoProject: projects[];
+  project: projects[];
   selectedProject: string;
 };
 
 import RenderProjectsIntoMainContent from "./RenderProjectsIntoMainContent.tsx";
 
 export default function MainContent({
-  demoProject,
+  project,
   selectedProject,
 }: mainContentProps) {
   return (
     <div className="w-auto">
-      <div className="flex p-4 md:p-6 lg:p-8">
+      <div className="flex p-4 md:p-6 lg:p-8 ">
         <span className="font-thin mr-2 text-xs md:text-lg lg:text-2xl self-center">
           Project Title:{" "}
         </span>
@@ -23,7 +23,7 @@ export default function MainContent({
         </div>
       </div>
       <RenderProjectsIntoMainContent
-        demoProject={demoProject}
+        project={project}
         selectedProject={selectedProject}
       ></RenderProjectsIntoMainContent>
     </div>

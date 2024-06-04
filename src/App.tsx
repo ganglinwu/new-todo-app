@@ -14,7 +14,7 @@ function App() {
       <div className="grid grid-cols-3 md:grid-cols-4">
         <div className="col-span-1">
           <Sidebar
-            demoProjects={demoProjects}
+            projects={demoProjects}
             selectedProject={selectedProject}
             onSelect={setSelectedProject}
           ></Sidebar>

@@ -17,13 +17,13 @@ import {
 import AddProject from "../../addProject/AddProject.tsx";
 
 type projectScrollAreaProps = {
-  demoProjects: projects[];
+  projects: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
 };
 
 export default function ProjectScrollArea({
-  demoProjects,
+  projects,
   selectedProject,
   onSelect,
 }: projectScrollAreaProps) {
@@ -56,7 +56,7 @@ export default function ProjectScrollArea({
             All Projects
           </h4>
         </div>
-        {demoProjects.map((project) => (
+        {projects.map((project) => (
           <div
             key={project.projectName}
             className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}

@@ -21,18 +21,18 @@ import shouldThisProjectCardBeRendered from "../../utils/shouldThisProjectCardBe
 import { projects } from "../../demoData/demoProjects";
 
 type RenderProjectsIntoMainContentProps = {
-  demoProject: projects[];
+  project: projects[];
   selectedProject: string;
 };
 
 export default function RenderProjectsIntoMainContent({
-  demoProject,
+  project,
   selectedProject,
 }: RenderProjectsIntoMainContentProps) {
   return (
     <div className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative">
       <div className="flex whitespace-nowrap gap-3 w-[max-content]">
-        {demoProject.map((project) => (
+        {project.map((project) => (
           <Card
             key={project.projectName}
             className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
