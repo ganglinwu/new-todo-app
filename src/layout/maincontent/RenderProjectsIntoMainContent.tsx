@@ -35,7 +35,7 @@ export default function RenderProjectsIntoMainContent({
         {demoProject.map((project) => (
           <Card
             key={project.projectName}
-            className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px]`}
+            className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
           >
             <CardHeader>
               <CardTitle className="ml-2 mt-2 p-2 self-center">
