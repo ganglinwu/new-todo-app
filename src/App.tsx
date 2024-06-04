@@ -21,7 +21,7 @@ function App() {
         </div>
         <div className="col-span-2 md:col-span-3">
           <MainContent
-            demoProject={demoProjects}
+            project={demoProjects}
             selectedProject={selectedProject}
           ></MainContent>
         </div>

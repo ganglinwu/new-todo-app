@@ -32,19 +32,19 @@ export default function RenderProjectsIntoMainContent({
   return (
     <div className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative">
       <div className="flex whitespace-nowrap gap-3 w-[max-content]">
-        {project.map((project) => (
+        {project.map((proj) => (
           <Card
-            key={project.projectName}
-            className={`${shouldThisProjectCardBeRendered(project.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
+            key={proj.projectName}
+            className={`${shouldThisProjectCardBeRendered(proj.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
           >
             <CardHeader>
               <CardTitle className="ml-2 mt-2 p-2 self-center">
-                {project.projectName}
+                {proj.projectName}
               </CardTitle>
               <CardDescription></CardDescription>
             </CardHeader>
             <CardContent>
-              {project.tasks.map((task) => (
+              {proj.tasks.map((task) => (
                 <div
                   key={task.taskName}
                   className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent rounded-xl mb-2 md:mb-4 shadow-xl`}
