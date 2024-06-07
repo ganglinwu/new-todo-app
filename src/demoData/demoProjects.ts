@@ -20,6 +20,25 @@ export class Project {
   }
 }
 
+export class Task {
+  taskName: string;
+  taskDueDate: Date;
+  taskDuration: number;
+  taskUrgency: "Low" | "Medium" | "High";
+
+  constructor(
+    taskName: string,
+    taskDueDate: Date,
+    taskDuration: number,
+    taskUrgency: "Low" | "Medium" | "High",
+  ) {
+    this.taskName = taskName;
+    this.taskDueDate = taskDueDate;
+    this.taskDuration = taskDuration;
+    this.taskUrgency = taskUrgency;
+  }
+}
+
 export const demoProjects: projects[] = [
   {
     projectName: "Nice to haves",
