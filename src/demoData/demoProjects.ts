@@ -96,3 +96,9 @@ export const demoProjects: projects[] = [
     ],
   },
 ];
+
+export const userProjectData = {
+  userName: "test",
+  timeUpdated: new Date("2020-03-20"),
+  projects: demoProjects,
+};
