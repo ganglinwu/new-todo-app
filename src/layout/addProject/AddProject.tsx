@@ -34,30 +34,15 @@ export default function AddProject() {
                 className="px-1 py-1/2 text-sm md:text-lg"
               />
             </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label
-                htmlFor="description"
-                className="font-semibold text-sm md:text-lg"
-              >
-                Description
-              </Label>
-              <Input
-                id="description"
-                placeholder="Describe your project here"
-                className="px-1 py-1/2 text-sm md:text-lg"
-              />
-            </div>
           </div>
+          <Button
+            variant="outline"
+            className="rounded-xl px-2 py-1 md:px-3 md:py-1.5 md:text-lg my-2 md:my-4"
+          >
+            Add Project
+          </Button>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-between pt-4">
-        <Button
-          variant="outline"
-          className="rounded-xl px-2 py-1 md:px-3 md:py-1.5 md:text-lg"
-        >
-          Add Project
-        </Button>
-      </CardFooter>
     </Card>
   );
 }
