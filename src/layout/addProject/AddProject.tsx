@@ -1,16 +1,22 @@
+import { SetStateAction } from "react";
 import { Button } from "../../../@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../../@/components/ui/card.tsx";
 import { Input } from "../../../@/components/ui/input.tsx";
 import { Label } from "../../../@/components/ui/label.tsx";
+import { Project, projects } from "../../demoData/demoProjects.ts";
 
-export default function AddProject() {
+type addProjectProps = {
+  projects: projects[];
+  setProjects: React.Dispatch<SetStateAction<projects[]>>;
+};
+
+export default function AddProject({ projects, setProjects }: addProjectProps) {
   return (
     <Card className="w-[250px] md:w-[500px] bg-secondary p-2">
       <CardHeader>
@@ -29,7 +35,7 @@ export default function AddProject() {
                 Name
               </Label>
               <Input
-                id="name"
+                id="projectname"
                 placeholder="Name of your project"
                 className="px-1 py-1/2 text-sm md:text-lg"
               />
@@ -38,6 +44,16 @@ export default function AddProject() {
           <Button
             variant="outline"
             className="rounded-xl px-2 py-1 md:px-3 md:py-1.5 md:text-lg my-2 md:my-4"
+            type="button"
+            onClick={() => {
+              const projectName = document.getElementById("projectname")?.value;
+              if (!projectName) {
+                alert("Please ensure project name is not blank!");
+              }
+              const newProj = new Project(projectName);
+              projects.push(newProj);
+              setProjects(projects);
+            }}
           >
             Add Project
           </Button>

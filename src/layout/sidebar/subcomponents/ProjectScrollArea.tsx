@@ -15,17 +15,27 @@ import {
   PopoverContent,
 } from "../../../../@/components/ui/popover.tsx";
 import AddProject from "../../addProject/AddProject.tsx";
+import { SetStateAction } from "react";
 
 type projectScrollAreaProps = {
   projects: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
+  setUserProjects: React.Dispatch<
+    SetStateAction<{
+      userName: string;
+      timeUpdated: Date;
+      projects: projects[];
+    }>
+  >;
+  setProjects: React.Dispatch<SetStateAction<projects[]>>;
 };
 
 export default function ProjectScrollArea({
   projects,
   selectedProject,
   onSelect,
+  setProjects,
 }: projectScrollAreaProps) {
   return (
     <ScrollArea className="shadow-xl border border-border rounded-l">
@@ -43,7 +53,10 @@ export default function ProjectScrollArea({
             </button>
           </PopoverTrigger>
           <PopoverContent className="transition-transform">
-            <AddProject></AddProject>
+            <AddProject
+              projects={projects}
+              setProjects={setProjects}
+            ></AddProject>
           </PopoverContent>
         </Popover>
       </div>
@@ -70,14 +83,15 @@ export default function ProjectScrollArea({
               </HoverCardTrigger>
               <HoverCardContent className="bg-white">
                 <h6>Tasks:</h6>
-                {project.tasks.map((task) => (
-                  <div
-                    key={task.taskName}
-                    className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
-                  >
-                    {task.taskName}
-                  </div>
-                ))}
+                {project.tasks &&
+                  project.tasks.map((task) => (
+                    <div
+                      key={task.taskName}
+                      className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
+                    >
+                      {task.taskName}
+                    </div>
+                  ))}
               </HoverCardContent>
             </HoverCard>
           </div>

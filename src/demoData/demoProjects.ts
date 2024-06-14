@@ -7,16 +7,19 @@ export type task = {
 
 export type projects = {
   projectName: string;
-  tasks: task[] | task;
+  tasks?: task[];
 };
 
 export class Project {
   projectName: string;
-  tasks?: task[] | task;
+  tasks?: task[];
 
-  constructor(projectName: string, tasks: task | task[]) {
+  constructor(projectName: string, tasks?: task[]) {
     this.projectName = projectName;
-    this.tasks = tasks;
+    this.tasks = [];
+    if (tasks) {
+      this.tasks = tasks;
+    }
   }
 }
 
@@ -94,6 +97,10 @@ export const demoProjects: projects[] = [
         taskUrgency: "Low",
       },
     ],
+  },
+  {
+    projectName: "Test project with no tasks",
+    tasks: [],
   },
 ];
 
