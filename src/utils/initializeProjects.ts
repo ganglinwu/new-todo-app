@@ -1,31 +1,29 @@
 import React, { SetStateAction } from "react";
-import { projects } from "../types";
+import { userData } from "../types";
 import { storageAvailable } from "./storageAvailable";
+import dateParser from "./dateParser";
+import { demoUserData } from "../demoData/demoProjects";
 
 export function initializeProjects(
-  userData: {
-    userName: string;
-    timeUpdated: Date;
-    projects: projects[];
-  },
-  setUserData: React.Dispatch<
-    SetStateAction<{
-      userName: string;
-      timeUpdated: Date;
-      projects: projects[];
-    }>
-  >,
+  userData: userData,
+  setUserData: React.Dispatch<SetStateAction<userData>>,
 ) {
   if (storageAvailable("localStorage")) {
     const dataString = localStorage.getItem("userData");
     if (dataString) {
-      setUserData(JSON.parse(dataString));
+      const localStorageUserData = dateParser(JSON.parse(dataString));
+      const timeDiff =
+        localStorageUserData.timeUpdated.getTime() -
+        demoUserData.timeUpdated.getTime();
+      if (timeDiff > 0) {
+        setUserData(localStorageUserData);
+      } else {
+        localStorage.setItem("userData", JSON.stringify(userData));
+      }
     } else {
-      localStorage.setItem("userData", JSON.stringify(userData));
+      prompt(
+        "Local storage is not made available. Changes saved will not persist when browser is closed!",
+      );
     }
-  } else {
-    prompt(
-      "Local storage is not made available. Changes saved will not persist when browser is closed!",
-    );
   }
 }

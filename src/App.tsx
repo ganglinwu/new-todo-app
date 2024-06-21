@@ -20,9 +20,9 @@ function App() {
     setUserData(newUserData);
     localStorage.setItem("userData", JSON.stringify(newUserData));
   }, [projects]);
-  // useEffect(() => {
-  //   initializeProjects(userData, setUserData);
-  // }, [userData]);
+  useEffect(() => {
+    initializeProjects(userData, setUserData);
+  }, []);
   return (
     <div className="flex flex-col relative z-1">
       <Header></Header>

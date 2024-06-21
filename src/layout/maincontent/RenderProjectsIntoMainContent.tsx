@@ -18,10 +18,10 @@ import bgColourByUrgencyExpiry from "../../utils/bgColourByUrgencyExpiry";
 import shouldThisProjectCardBeRendered from "../../utils/shouldThisProjectCardBeRendered.ts";
 
 // type import
-import { projects } from "../../demoData/demoProjects";
+import { projects } from "../../types";
 
 type RenderProjectsIntoMainContentProps = {
-  project: projects[];
+  project?: projects[];
   selectedProject: string;
 };
 
@@ -32,56 +32,70 @@ export default function RenderProjectsIntoMainContent({
   return (
     <div className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative">
       <div className="flex whitespace-nowrap gap-3 w-[max-content]">
-        {project.map((proj) => (
-          <Card
-            key={proj.projectName}
-            className={`${shouldThisProjectCardBeRendered(proj.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
-          >
-            <CardHeader>
-              <CardTitle className="ml-2 mt-2 p-2 self-center">
-                {proj.projectName}
-              </CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-            <CardContent>
-              {proj.tasks.map((task) => (
-                <div
-                  key={task.taskName}
-                  className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent rounded-xl mb-2 md:mb-4 shadow-xl`}
-                >
-                  <div className="p-2">
-                    Task:{" "}
-                    <span className="font-thin text-wrap">{task.taskName}</span>
-                  </div>
-                  <div className="p-2">
-                    Due Date:{" "}
-                    <span className="font-thin text-wrap">
-                      {task.taskDueDate ? task.taskDueDate.toString() : ""}
-                    </span>
-                  </div>
-                  <div className="p-2">
-                    Duration:{" "}
-                    <span className="font-thin text-wrap">
-                      {task.taskDuration} minutes
-                    </span>
-                  </div>
-                  <div className="p-2">
-                    Urgency:{" "}
-                    <span className="font-thin text-wrap">
-                      {task.taskUrgency}
-                    </span>
-                  </div>
-                  <Popover>
-                    <PopoverTrigger className="border hover:bg-accent bg-secondary rounded-xl outline-none shadow-lg p-1 md:p-1 lg:p-2">
-                      Edit Task
-                    </PopoverTrigger>
-                    <PopoverContent>Placeholder</PopoverContent>
-                  </Popover>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        ))}
+        {project ? (
+          project.map((proj) => (
+            <Card
+              key={proj.projectName}
+              className={`${shouldThisProjectCardBeRendered(proj.projectName, selectedProject) ? "" : "hidden"} border-none w-[150px] md:w-[300px] lg-:w-[450px] -z-10`}
+            >
+              <CardHeader>
+                <CardTitle className="ml-2 mt-2 p-2 self-center">
+                  {proj.projectName}
+                </CardTitle>
+                <CardDescription></CardDescription>
+              </CardHeader>
+              <CardContent>
+                {proj.tasks ? (
+                  proj.tasks.map((task) => (
+                    <div
+                      key={task.taskName}
+                      className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent rounded-xl mb-2 md:mb-4 shadow-xl`}
+                    >
+                      <div className="p-2">
+                        Task:{" "}
+                        <span className="font-thin text-wrap">
+                          {task.taskName}
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        Due Date:{" "}
+                        <span className="font-thin text-wrap">
+                          {task.taskDueDate ? task.taskDueDate.toString() : ""}
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        Duration:{" "}
+                        <span className="font-thin text-wrap">
+                          {task.taskDuration ? (
+                            <span>{task.taskDuration} minutes</span>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                      <div className="p-2">
+                        Urgency:{" "}
+                        <span className="font-thin text-wrap">
+                          {task.taskUrgency}
+                        </span>
+                      </div>
+                      <Popover>
+                        <PopoverTrigger className="border hover:bg-accent bg-secondary rounded-xl outline-none shadow-lg p-1 md:p-1 lg:p-2">
+                          Edit Task
+                        </PopoverTrigger>
+                        <PopoverContent>Placeholder</PopoverContent>
+                      </Popover>
+                    </div>
+                  ))
+                ) : (
+                  <div>No tasks available, would you like to create one?</div>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <div>No Projects, create one to start!</div>
+        )}
       </div>
     </div>
   );
