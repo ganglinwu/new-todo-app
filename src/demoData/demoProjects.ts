@@ -1,15 +1,3 @@
-export type task = {
-  taskName: string;
-  taskDueDate?: Date;
-  taskDuration?: number;
-  taskUrgency: "Low" | "Medium" | "High";
-};
-
-export type projects = {
-  projectName: string;
-  tasks?: task[];
-};
-
 export class Project {
   projectName: string;
   tasks?: task[];
