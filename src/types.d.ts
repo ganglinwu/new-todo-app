@@ -20,7 +20,7 @@ export type userData = {
 export type parsedTask = {
   taskName: string;
   taskDueDate?: string;
-  taskDuration?: string;
+  taskDuration?: number;
   taskUrgency: "Low" | "Medium" | "High";
 };
 
