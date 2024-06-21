@@ -34,3 +34,5 @@ export type parsedUserData = {
   timeUpdated: string;
   projects?: parsedProjects[];
 };
+
+export {};

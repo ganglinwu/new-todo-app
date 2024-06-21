@@ -1,3 +1,5 @@
+import { task, projects, userData } from "../types";
+
 export class Project {
   projectName: string;
   tasks?: task[];
@@ -92,7 +94,7 @@ export const demoProjects: projects[] = [
   },
 ];
 
-export const userProjectData = {
+export const demoUserData: userData = {
   userName: "test",
   timeUpdated: new Date("2020-03-20"),
   projects: demoProjects,

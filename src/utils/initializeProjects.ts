@@ -1,14 +1,14 @@
 import React, { SetStateAction } from "react";
-import { projects } from "../demoData/demoProjects";
+import { projects } from "../types";
 import { storageAvailable } from "./storageAvailable";
 
 export function initializeProjects(
-  userProjects: {
+  userData: {
     userName: string;
     timeUpdated: Date;
     projects: projects[];
   },
-  setUserProjects: React.Dispatch<
+  setUserData: React.Dispatch<
     SetStateAction<{
       userName: string;
       timeUpdated: Date;
@@ -17,11 +17,11 @@ export function initializeProjects(
   >,
 ) {
   if (storageAvailable("localStorage")) {
-    const dataString = localStorage.getItem("userProjects");
+    const dataString = localStorage.getItem("userData");
     if (dataString) {
-      setUserProjects(JSON.parse(dataString));
+      setUserData(JSON.parse(dataString));
     } else {
-      localStorage.setItem("userProjects", JSON.stringify(userProjects));
+      localStorage.setItem("userData", JSON.stringify(userData));
     }
   } else {
     prompt(

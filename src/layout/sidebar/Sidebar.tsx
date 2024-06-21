@@ -1,15 +1,16 @@
 // type import
 import { SetStateAction } from "react";
-import { projects } from "../../demoData/demoProjects.ts";
+import { userData, projects } from "../../types";
 
 // component import
 import ProjectScrollArea from "./subcomponents/ProjectScrollArea.tsx";
 
 type sidebarProps = {
-  projects: projects[];
+  projects?: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
-  setProjects: React.Dispatch<SetStateAction<projects[]>>;
+  setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>;
+  setUserData: React.Dispatch<SetStateAction<userData>>;
 };
 
 export default function Sidebar({
@@ -17,6 +18,7 @@ export default function Sidebar({
   selectedProject,
   onSelect,
   setProjects,
+  setUserData,
 }: sidebarProps) {
   return (
     <div className="p-4 md:p-6 lg:p-8">
@@ -25,6 +27,7 @@ export default function Sidebar({
         selectedProject={selectedProject}
         onSelect={onSelect}
         setProjects={setProjects}
+        setUserData={setUserData}
       ></ProjectScrollArea>
     </div>
   );

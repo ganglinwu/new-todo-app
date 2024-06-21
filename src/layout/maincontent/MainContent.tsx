@@ -1,8 +1,8 @@
 // type import
-import { projects } from "../../demoData/demoProjects.ts";
+import { projects } from "../../types";
 
 type mainContentProps = {
-  project: projects[];
+  project?: projects[];
   selectedProject: string;
 };
 

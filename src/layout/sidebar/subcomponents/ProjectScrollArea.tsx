@@ -6,7 +6,7 @@ import {
   HoverCardTrigger,
 } from "../../../../@/components/ui/hover-card.tsx";
 
-import { projects } from "../../../demoData/demoProjects.ts";
+import { projects, userData } from "../../../types";
 import bgColourByUrgencyExpiry from "../../../utils/bgColourByUrgencyExpiry.ts";
 import isTaskExpired from "../../../utils/isTaskExpired.ts";
 import {
@@ -18,17 +18,11 @@ import AddProject from "../../addProject/AddProject.tsx";
 import { SetStateAction } from "react";
 
 type projectScrollAreaProps = {
-  projects: projects[];
+  projects?: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
-  setUserProjects: React.Dispatch<
-    SetStateAction<{
-      userName: string;
-      timeUpdated: Date;
-      projects: projects[];
-    }>
-  >;
-  setProjects: React.Dispatch<SetStateAction<projects[]>>;
+  setUserData: React.Dispatch<SetStateAction<userData>>;
+  setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>;
 };
 
 export default function ProjectScrollArea({
@@ -69,33 +63,38 @@ export default function ProjectScrollArea({
             All Projects
           </h4>
         </div>
-        {projects.map((project) => (
-          <div
-            key={project.projectName}
-            className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
-            onClick={() => onSelect(project.projectName)}
-          >
-            <HoverCard>
-              <HoverCardTrigger>
-                <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
-                  {project.projectName}
-                </h4>
-              </HoverCardTrigger>
-              <HoverCardContent className="bg-white">
-                <h6>Tasks:</h6>
-                {project.tasks &&
-                  project.tasks.map((task) => (
-                    <div
-                      key={task.taskName}
-                      className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
-                    >
-                      {task.taskName}
-                    </div>
-                  ))}
-              </HoverCardContent>
-            </HoverCard>
-          </div>
-        ))}
+
+        {projects ? (
+          projects.map((project) => (
+            <div
+              key={project.projectName}
+              className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
+              onClick={() => onSelect(project.projectName)}
+            >
+              <HoverCard>
+                <HoverCardTrigger>
+                  <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
+                    {project.projectName}
+                  </h4>
+                </HoverCardTrigger>
+                <HoverCardContent className="bg-white">
+                  <h6>Tasks:</h6>
+                  {project.tasks &&
+                    project.tasks.map((task) => (
+                      <div
+                        key={task.taskName}
+                        className={`${isTaskExpired(task) ? "bg-gray-500" : bgColourByUrgencyExpiry(task)} p-2 border border-b-accent`}
+                      >
+                        {task.taskName}
+                      </div>
+                    ))}
+                </HoverCardContent>
+              </HoverCard>
+            </div>
+          ))
+        ) : (
+          <div>No Projects, create one!</div>
+        )}
       </div>
     </ScrollArea>
   );

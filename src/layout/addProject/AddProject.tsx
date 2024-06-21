@@ -9,11 +9,12 @@ import {
 } from "../../../@/components/ui/card.tsx";
 import { Input } from "../../../@/components/ui/input.tsx";
 import { Label } from "../../../@/components/ui/label.tsx";
-import { Project, projects } from "../../demoData/demoProjects.ts";
+import { Project } from "../../demoData/demoProjects.ts";
+import { projects } from "../../types";
 
 type addProjectProps = {
-  projects: projects[];
-  setProjects: React.Dispatch<SetStateAction<projects[]>>;
+  projects?: projects[];
+  setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>;
 };
 
 export default function AddProject({ projects, setProjects }: addProjectProps) {
@@ -51,6 +52,9 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
                 alert("Please ensure project name is not blank!");
               }
               const newProj = new Project(projectName);
+              if (projects === undefined) {
+                projects = [];
+              }
               projects.push(newProj);
               setProjects(projects);
             }}

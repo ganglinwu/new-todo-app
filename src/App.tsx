@@ -3,26 +3,26 @@ import Header from "./layout/header/Header.tsx";
 import MainContent from "./layout/maincontent/MainContent.tsx";
 import Sidebar from "./layout/sidebar/Sidebar.tsx";
 
-import { userProjectData } from "./demoData/demoProjects";
+import { demoUserData } from "./demoData/demoProjects";
 import { useState, useEffect } from "react";
 import { initializeProjects } from "./utils/initializeProjects.ts";
 
 function App() {
   const [selectedProject, setSelectedProject] = useState("All Projects");
-  const [userProjects, setUserProjects] = useState(userProjectData);
-  const [projects, setProjects] = useState(userProjects.projects);
+  const [userData, setUserData] = useState(demoUserData);
+  const [projects, setProjects] = useState(userData.projects);
   useEffect(() => {
-    let newUserProjectData = {
-      userName: userProjects.userName,
+    let newUserData = {
+      userName: userData.userName,
       timeUpdated: new Date(),
       projects: projects,
     };
-    setUserProjects(newUserProjectData);
-    localStorage.setItem("userProjects", JSON.stringify(newUserProjectData));
+    setUserData(newUserData);
+    localStorage.setItem("userData", JSON.stringify(newUserData));
   }, [projects]);
   // useEffect(() => {
-  //   initializeProjects(userProjects, setUserProjects);
-  // }, [userProjects]);
+  //   initializeProjects(userData, setUserData);
+  // }, [userData]);
   return (
     <div className="flex flex-col relative z-1">
       <Header></Header>
@@ -33,6 +33,7 @@ function App() {
             selectedProject={selectedProject}
             onSelect={setSelectedProject}
             setProjects={setProjects}
+            setUserData={setUserData}
           ></Sidebar>
         </div>
         <div className="col-span-2 md:col-span-3">
