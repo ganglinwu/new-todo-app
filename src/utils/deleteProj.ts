@@ -4,12 +4,12 @@ import { projects, userData } from "../types";
 export function deleteProj(
   projName: string,
   projects: projects[],
-  setProjects: React.Dispatch<SetStateAction<projects[]>>,
+  setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>,
 ) {
-  projects = projects.filter((proj) => {
+  const newProjects = projects.filter((proj) => {
     return proj.projectName !== projName;
   });
-  setProjects(projects);
+  setProjects(newProjects);
   alert("Project deleted.");
 }
 

@@ -1,4 +1,4 @@
-import { ListPlus } from "lucide-react";
+import { ListPlus, Trash2 } from "lucide-react";
 import { ScrollArea } from "../../../../@/components/ui/scroll-area.tsx";
 import {
   HoverCard,
@@ -17,7 +17,7 @@ import {
 import AddProject from "../../addProject/AddProject.tsx";
 import { SetStateAction, useState } from "react";
 import { Button } from "../../../../@/components/ui/button.tsx";
-import { deleteAllProj } from "../../../utils/deleteProj.ts";
+import { deleteAllProj, deleteProj } from "../../../utils/deleteProj.ts";
 
 type projectScrollAreaProps = {
   projects?: projects[];
@@ -36,6 +36,7 @@ export default function ProjectScrollArea({
   userData,
   setUserData,
 }: projectScrollAreaProps) {
+  const [allDeleteHover, setAllDeleteHover] = useState(false);
   const [deleteHover, setDeleteHover] = useState(false);
   return (
     <ScrollArea className="shadow-xl border border-border rounded-l">
@@ -62,7 +63,7 @@ export default function ProjectScrollArea({
       </div>
       <div className="bg-secondary">
         <div
-          className={`${selectedProject === "All Projects" ? `${deleteHover ? "bg-red-300" : "bg-accent"}` : `${deleteHover ? "bg-red-300" : "hover:bg-blue-300"}`} transition-all flex justify-between pr-2 md:pr-4`}
+          className={`${selectedProject === "All Projects" ? `${allDeleteHover ? "bg-red-300" : "bg-accent"}` : `${allDeleteHover ? "bg-red-300" : "hover:bg-blue-300"}`} transition-all flex justify-between pr-2 md:pr-4`}
           onClick={() => onSelect("All Projects")}
         >
           <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
@@ -71,12 +72,13 @@ export default function ProjectScrollArea({
           <Button
             className="z-10 bg-red-500 px-1 md:px-2 h-6 md:h-8 self-center rounded-xl border-none shadow-xl hover:bg-red-800 text-white text-xs md:text-lg "
             onMouseOver={() => {
-              setDeleteHover(true);
+              setAllDeleteHover(true);
             }}
             onMouseLeave={() => {
-              setDeleteHover(false);
+              setAllDeleteHover(false);
             }}
             onClick={() => deleteAllProj(userData, setUserData)}
+            type="button"
           >
             Delete All
           </Button>
@@ -86,14 +88,25 @@ export default function ProjectScrollArea({
           projects.map((project) => (
             <div
               key={project.projectName}
-              className={`${selectedProject === project.projectName ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
+              className={`${selectedProject === project.projectName ? `${deleteHover ? "bg-red-300" : "bg-accent"}` : `${deleteHover ? "hover:bg-red-300" : "hover:bg-blue-300"}`} transition-colors`}
               onClick={() => onSelect(project.projectName)}
             >
               <HoverCard>
-                <HoverCardTrigger>
+                <HoverCardTrigger className="flex justify-between pr-3 md:pr-4">
                   <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
                     {project.projectName}
                   </h4>
+                  <Button
+                    className="aspect-square h-4 md:h-6 rounded-xl border-none self-center"
+                    type="button"
+                    onMouseOver={() => setDeleteHover(true)}
+                    onMouseLeave={() => setDeleteHover(false)}
+                    onClick={() =>
+                      deleteProj(project.projectName, projects, setProjects)
+                    }
+                  >
+                    <Trash2></Trash2>
+                  </Button>
                 </HoverCardTrigger>
                 <HoverCardContent className="bg-white">
                   <h6>Tasks:</h6>
