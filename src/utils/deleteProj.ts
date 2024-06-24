@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { projects } from "../demoData/demoProjects";
+import { projects } from "../types";
 
 export default function deleteProj(
   projName: string,
