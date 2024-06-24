@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { Button } from "../../../@/components/ui/button";
 import {
   Card,
@@ -18,6 +18,7 @@ type addProjectProps = {
 };
 
 export default function AddProject({ projects, setProjects }: addProjectProps) {
+  const [input, setInput] = useState("");
   return (
     <Card className="w-[250px] md:w-[500px] bg-secondary p-2">
       <CardHeader>
@@ -39,6 +40,8 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
                 id="projectname"
                 placeholder="Name of your project"
                 className="px-1 py-1/2 text-sm md:text-lg"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
               />
             </div>
           </div>
@@ -47,7 +50,7 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
             className="rounded-xl px-2 py-1 md:px-3 md:py-1.5 md:text-lg my-2 md:my-4"
             type="button"
             onClick={() => {
-              const projectName = document.getElementById("projectname")?.value;
+              const projectName = input;
               if (!projectName) {
                 alert("Please ensure project name is not blank!");
               }
@@ -55,8 +58,7 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
               if (projects === undefined) {
                 projects = [];
               }
-              projects.push(newProj);
-              setProjects(projects);
+              setProjects([...projects, newProj]);
             }}
           >
             Add Project
