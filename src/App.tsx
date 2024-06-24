@@ -3,7 +3,6 @@ import Header from "./layout/header/Header.tsx";
 import MainContent from "./layout/maincontent/MainContent.tsx";
 import Sidebar from "./layout/sidebar/Sidebar.tsx";
 
-import { demoUserData } from "./demoData/demoProjects";
 import { useState, useEffect } from "react";
 import { initializeUserData } from "./utils/initializeUserData.ts";
 
@@ -30,6 +29,7 @@ function App() {
             selectedProject={selectedProject}
             onSelect={setSelectedProject}
             setProjects={setProjects}
+            userData={userData}
             setUserData={setUserData}
           ></Sidebar>
         </div>

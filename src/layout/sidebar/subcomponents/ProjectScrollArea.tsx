@@ -17,11 +17,13 @@ import {
 import AddProject from "../../addProject/AddProject.tsx";
 import { SetStateAction, useState } from "react";
 import { Button } from "../../../../@/components/ui/button.tsx";
+import { deleteAllProj } from "../../../utils/deleteProj.ts";
 
 type projectScrollAreaProps = {
   projects?: projects[];
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
+  userData: userData;
   setUserData: React.Dispatch<SetStateAction<userData>>;
   setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>;
 };
@@ -31,6 +33,8 @@ export default function ProjectScrollArea({
   selectedProject,
   onSelect,
   setProjects,
+  userData,
+  setUserData,
 }: projectScrollAreaProps) {
   const [deleteHover, setDeleteHover] = useState(false);
   return (
@@ -65,13 +69,14 @@ export default function ProjectScrollArea({
             All Projects
           </h4>
           <Button
-            className="z-10 bg-red-500 px-2 h-8 self-center rounded-xl border-none shadow-xl hover:bg-red-800 text-white"
+            className="z-10 bg-red-500 px-1 md:px-2 h-6 md:h-8 self-center rounded-xl border-none shadow-xl hover:bg-red-800 text-white text-xs md:text-lg "
             onMouseOver={() => {
               setDeleteHover(true);
             }}
             onMouseLeave={() => {
               setDeleteHover(false);
             }}
+            onClick={() => deleteAllProj(userData, setUserData)}
           >
             Delete All
           </Button>

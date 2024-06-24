@@ -10,6 +10,7 @@ type sidebarProps = {
   selectedProject: string;
   onSelect: (selectedProject: string) => void;
   setProjects: React.Dispatch<SetStateAction<projects[] | undefined>>;
+  userData: userData;
   setUserData: React.Dispatch<SetStateAction<userData>>;
 };
 
@@ -18,6 +19,7 @@ export default function Sidebar({
   selectedProject,
   onSelect,
   setProjects,
+  userData,
   setUserData,
 }: sidebarProps) {
   return (
@@ -27,6 +29,7 @@ export default function Sidebar({
         selectedProject={selectedProject}
         onSelect={onSelect}
         setProjects={setProjects}
+        userData={userData}
         setUserData={setUserData}
       ></ProjectScrollArea>
     </div>
