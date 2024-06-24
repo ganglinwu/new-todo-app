@@ -5,11 +5,11 @@ import Sidebar from "./layout/sidebar/Sidebar.tsx";
 
 import { demoUserData } from "./demoData/demoProjects";
 import { useState, useEffect } from "react";
-import { initializeProjects } from "./utils/initializeProjects.ts";
+import { initializeUserData } from "./utils/initializeUserData.ts";
 
 function App() {
   const [selectedProject, setSelectedProject] = useState("All Projects");
-  const [userData, setUserData] = useState(demoUserData);
+  const [userData, setUserData] = useState(() => initializeUserData());
   const [projects, setProjects] = useState(userData.projects);
   useEffect(() => {
     let newUserData = {
@@ -20,9 +20,6 @@ function App() {
     setUserData(newUserData);
     localStorage.setItem("userData", JSON.stringify(newUserData));
   }, [projects]);
-  useEffect(() => {
-    initializeProjects(userData, setUserData);
-  }, []);
   return (
     <div className="flex flex-col relative z-1">
       <Header></Header>

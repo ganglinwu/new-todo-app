@@ -29,6 +29,7 @@ export default function dateParser(
           });
         });
       }
+      userData.projects!.push(parsedProject);
     });
   }
   return userData;
