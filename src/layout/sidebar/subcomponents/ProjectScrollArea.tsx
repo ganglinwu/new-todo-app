@@ -15,7 +15,8 @@ import {
   PopoverContent,
 } from "../../../../@/components/ui/popover.tsx";
 import AddProject from "../../addProject/AddProject.tsx";
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
+import { Button } from "../../../../@/components/ui/button.tsx";
 
 type projectScrollAreaProps = {
   projects?: projects[];
@@ -31,6 +32,7 @@ export default function ProjectScrollArea({
   onSelect,
   setProjects,
 }: projectScrollAreaProps) {
+  const [deleteHover, setDeleteHover] = useState(false);
   return (
     <ScrollArea className="shadow-xl border border-border rounded-l">
       <div className="hover:bg-secondary flex justify-between p-2">
@@ -56,12 +58,23 @@ export default function ProjectScrollArea({
       </div>
       <div className="bg-secondary">
         <div
-          className={`${selectedProject === "All Projects" ? "bg-accent" : "hover:bg-blue-300"} transition-colors`}
+          className={`${selectedProject === "All Projects" ? `${deleteHover ? "bg-red-300" : "bg-accent"}` : `${deleteHover ? "bg-red-300" : "hover:bg-blue-300"}`} transition-all flex justify-between pr-2 md:pr-4`}
           onClick={() => onSelect("All Projects")}
         >
           <h4 className="font-semibold p-2 text-xs md:text-lg md:p-4 lg:text-2xl lg-p-6 self-center">
             All Projects
           </h4>
+          <Button
+            className="z-10 bg-red-500 px-2 h-8 self-center rounded-xl border-none shadow-xl hover:bg-red-800 text-white"
+            onMouseOver={() => {
+              setDeleteHover(true);
+            }}
+            onMouseLeave={() => {
+              setDeleteHover(false);
+            }}
+          >
+            Delete All
+          </Button>
         </div>
 
         {projects ? (
