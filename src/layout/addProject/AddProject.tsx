@@ -58,7 +58,17 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
               if (projects === undefined) {
                 projects = [];
               }
-              setProjects([...projects, newProj]);
+              // check if project with same name already exists
+              const sameNameProjects = projects.filter(
+                (project) => project.projectName === input,
+              );
+              if (sameNameProjects.length) {
+                alert(
+                  "A project with the same name already exists. Please use another name.",
+                );
+              } else {
+                setProjects([...projects, newProj]);
+              }
             }}
           >
             Add Project
