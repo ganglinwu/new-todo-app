@@ -20,20 +20,18 @@ function App() {
     localStorage.setItem("userData", JSON.stringify(newUserData));
   }, [projects]);
   return (
-    <div className="flex flex-col relative z-1">
+    <div className="flex flex-col max-h-screen">
       <Header></Header>
-      <div className="grid grid-cols-3 md:grid-cols-4">
-        <div className="col-span-1">
-          <Sidebar
-            projects={projects}
-            selectedProject={selectedProject}
-            onSelect={setSelectedProject}
-            setProjects={setProjects}
-            userData={userData}
-            setUserData={setUserData}
-          ></Sidebar>
-        </div>
-        <div className="col-span-2 md:col-span-3">
+      <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
+        <Sidebar
+          projects={projects}
+          selectedProject={selectedProject}
+          onSelect={setSelectedProject}
+          setProjects={setProjects}
+          userData={userData}
+          setUserData={setUserData}
+        ></Sidebar>
+        <div className="sticky top-0 z-10">
           <MainContent
             project={projects}
             selectedProject={selectedProject}

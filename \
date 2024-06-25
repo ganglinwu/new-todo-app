@@ -105,7 +105,7 @@ export default function ProjectScrollArea({
                       deleteProj(project.projectName, projects, setProjects)
                     }
                   >
-                    <Trash2 className="aspect-square h-4 md:h-8"></Trash2>
+                    <Trash2 className="aspect-square h-6"></Trash2>
                   </Button>
                 </HoverCardTrigger>
                 <HoverCardContent className="bg-white z-50">

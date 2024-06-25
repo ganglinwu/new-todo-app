@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex justify-center items-center">
         <img
           src={logo}
-          className="aspect-square w-24 md:w-[70%] shadow-xl col-span-1"
+          className="aspect-square w-24 md:w-[40%] shadow-xl col-span-1"
         />
       </div>
       <div className="self-center md:col-span-3 col-span-2">Legend</div>
