@@ -68,6 +68,7 @@ export default function AddProject({ projects, setProjects }: addProjectProps) {
                 );
               } else {
                 setProjects([...projects, newProj]);
+                alert("Project created");
               }
             }}
           >
