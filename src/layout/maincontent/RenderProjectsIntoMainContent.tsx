@@ -19,6 +19,9 @@ import shouldThisProjectCardBeRendered from "../../utils/shouldThisProjectCardBe
 
 // type import
 import { projects } from "../../types";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { argv0 } from "process";
 
 type RenderProjectsIntoMainContentProps = {
   project?: projects[];
@@ -29,9 +32,15 @@ export default function RenderProjectsIntoMainContent({
   project,
   selectedProject,
 }: RenderProjectsIntoMainContentProps) {
+  const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(false);
+  const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
+  const [displacement, setDisplacement] = useState(0);
   return (
     <div className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative">
-      <div className="flex whitespace-nowrap gap-3 w-[max-content]">
+      <div
+        className="flex whitespace-nowrap gap-3 w-[max-content] transition-transform relative"
+        style={{ transform: `translateX(${displacement}px` }}
+      >
         {project ? (
           project.map((proj) => (
             <Card
@@ -97,6 +106,45 @@ export default function RenderProjectsIntoMainContent({
           <div>No Projects, create one to start!</div>
         )}
       </div>
+      {isLeftArrowVisible && (
+        <div
+          className="top-5 left-0 absolute bg-gradient-to-r-[50%] bg-white"
+          onClick={() => {
+            console.log("left button clicked");
+            setDisplacement((d) => {
+              const newDisplacement = d + 200;
+              if (newDisplacement >= 0) {
+                setIsLeftArrowVisible(false);
+                return 0;
+              } else {
+                setIsRightArrowVisible(true);
+                return newDisplacement;
+              }
+            });
+          }}
+        >
+          <ArrowLeft></ArrowLeft>
+        </div>
+      )}
+      {isRightArrowVisible && (
+        <div
+          className="top-5 right-0 absolute w-10 bg-gradient-to-r from-white to-transparent from-50%"
+          onClick={() =>
+            setDisplacement((d) => {
+              const newDisplacement = d - 200;
+              if (d <= -1000) {
+                setIsRightArrowVisible(false);
+                return -1000;
+              } else {
+                setIsLeftArrowVisible(true);
+                return newDisplacement;
+              }
+            })
+          }
+        >
+          <ArrowRight></ArrowRight>
+        </div>
+      )}
     </div>
   );
 }
