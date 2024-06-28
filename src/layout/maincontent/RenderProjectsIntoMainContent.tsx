@@ -20,8 +20,7 @@ import shouldThisProjectCardBeRendered from "../../utils/shouldThisProjectCardBe
 // type import
 import { projects } from "../../types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
-import { argv0 } from "process";
+import { useState, useRef } from "react";
 
 type RenderProjectsIntoMainContentProps = {
   project?: projects[];
@@ -35,8 +34,13 @@ export default function RenderProjectsIntoMainContent({
   const [isLeftArrowVisible, setIsLeftArrowVisible] = useState(false);
   const [isRightArrowVisible, setIsRightArrowVisible] = useState(true);
   const [displacement, setDisplacement] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   return (
-    <div className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative">
+    <div
+      className="mr-4 text-xs md:text-lg lg:text-2xl overflow-x-hidden relative"
+      id="projectContainer"
+      ref={containerRef}
+    >
       <div
         className="flex whitespace-nowrap gap-3 w-[max-content] transition-transform relative"
         style={{ transform: `translateX(${displacement}px` }}
@@ -110,7 +114,6 @@ export default function RenderProjectsIntoMainContent({
         <div
           className="top-5 left-0 absolute bg-gradient-to-r-[50%] bg-white"
           onClick={() => {
-            console.log("left button clicked");
             setDisplacement((d) => {
               const newDisplacement = d + 200;
               if (newDisplacement >= 0) {
@@ -132,9 +135,21 @@ export default function RenderProjectsIntoMainContent({
           onClick={() =>
             setDisplacement((d) => {
               const newDisplacement = d - 200;
-              if (d <= -1000) {
+              if (!containerRef.current) {
+                return d;
+              }
+              if (
+                newDisplacement <=
+                -1 *
+                  (containerRef.current.scrollWidth -
+                    containerRef.current.clientWidth)
+              ) {
                 setIsRightArrowVisible(false);
-                return -1000;
+                return (
+                  -1 *
+                  (containerRef.current.scrollWidth -
+                    containerRef.current.clientWidth)
+                );
               } else {
                 setIsLeftArrowVisible(true);
                 return newDisplacement;
