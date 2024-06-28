@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# worktree of other branches
+test
+
+# backend stuff
+backend
+
