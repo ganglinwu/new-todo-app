@@ -17,7 +17,7 @@ export function initializeUserData(): userData {
         return demoUserData;
       }
     } else {
-      prompt("data string does not exist");
+      alert("Local storage is empty, proceeding to load demodata");
     }
   } else {
     prompt(
