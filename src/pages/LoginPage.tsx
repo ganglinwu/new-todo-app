@@ -6,37 +6,64 @@ type LoginPageProps = {
 
 export default function LoginPage({ setIsLoggedIn }: LoginPageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userNameInput, setUserNameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   return (
-    <form method="POST" action="http://localhost:3001/login">
-      <input type="text" required name="userName" id="userName" />
-      <label htmlFor="userName">Username</label>
-      <input type="password" required name="password" id="password" />
+    <form>
+      <input
+        type="text"
+        required
+        name="username"
+        id="username"
+        value={userNameInput}
+        onChange={(e) => {
+          setUserNameInput(e.target.value);
+        }}
+      />
+      <label htmlFor="username">User name</label>
+      <input
+        type="password"
+        required
+        name="password"
+        id="password"
+        value={passwordInput}
+        onChange={(e) => {
+          setPasswordInput(e.target.value);
+        }}
+      />
       <label htmlFor="password">Password</label>
       <button
         type="submit"
         disabled={isSubmitting}
-        onClick={async (e) => {
+        onClick={(e) => {
           e.preventDefault();
           setIsSubmitting(true);
-          let xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://localhost:3001/login");
-          xhr.setRequestHeader("Content-type", "application/json");
-          xhr.setRequestHeader("Charset", "utf-8");
-          xhr.send(
-            JSON.stringify({
-              userName: "testuser",
-              password: "plaintext",
-            }),
-          );
-          xhr.onload = () => {
-            if (xhr.status === 200) {
-              alert("Login successful");
-              setIsLoggedIn(true);
-            } else {
-              alert("Login unsucessful");
-            }
+          try {
+            fetch("http://localhost:3001/login", {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                userName: userNameInput,
+                password: passwordInput,
+              }),
+            }).then((res) => {
+              if (res.ok) {
+                alert("Login successful");
+                setIsLoggedIn(true);
+                setIsSubmitting(false);
+              } else {
+                alert("Login unsuccessful, please check and try again");
+                setIsSubmitting(false);
+              }
+            });
+          } catch (error) {
+            console.error(error);
+            alert("Something went wrong, please try again");
             setIsSubmitting(false);
-          };
+          }
         }}
       >{`${isSubmitting ? "Submitting" : "Submit"}`}</button>
     </form>
