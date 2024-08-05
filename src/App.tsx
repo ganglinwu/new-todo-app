@@ -34,9 +34,9 @@ function App() {
       credentials: "include",
     }).then((response) => {
       if (response.ok) {
-        () => console.log("response from server: authorized");
-        () => setIsAuth(true);
-        () => setIsLoggedIn(true);
+        console.log("response from server: authorized");
+        setIsAuth(true);
+        setIsLoggedIn(true);
       } else {
         setIsAuth(false);
         setIsLoggedIn(false);
@@ -74,7 +74,7 @@ function App() {
       {!isLoggedin && <LoginPage setIsLoggedIn={setIsLoggedIn} />}
       {isAuth && (
         <div className="flex flex-col max-h-screen">
-          <Header></Header>
+          <Header setIsLoggedIn={setIsLoggedIn}></Header>
           <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
             <Sidebar
               projects={projects}
