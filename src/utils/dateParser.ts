@@ -8,10 +8,8 @@ export function dateStringtoDate(dateStr: string): Date {
 export default function dateParser(
   userDataFromLocalStorage: parsedUserData,
 ): userData {
-  const dateStr = userDataFromLocalStorage.timeUpdated;
   const userData: userData = {
     userName: userDataFromLocalStorage.userName,
-    timeUpdated: dateStringtoDate(dateStr),
     projects: [],
   };
   if (userDataFromLocalStorage.projects) {

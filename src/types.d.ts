@@ -12,7 +12,6 @@ export type projects = {
 
 export type userData = {
   userName: string;
-  timeUpdated: Date;
   projects?: projects[];
 };
 
@@ -31,7 +30,6 @@ export type parsedProjects = {
 
 export type parsedUserData = {
   userName: string;
-  timeUpdated: string;
   projects?: parsedProjects[];
 };
 
