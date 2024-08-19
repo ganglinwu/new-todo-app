@@ -13,7 +13,6 @@ export default function Index() {
   const [projects, setProjects] = useState(userData.projects);
   const [token, setToken] = useState(); //JWT
   const [isAuth, setIsAuth] = useState(false);
-  const [isLoggedin, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     let newUserData = {
@@ -33,13 +32,11 @@ export default function Index() {
       if (response.ok) {
         console.log("response from server: authorized");
         setIsAuth(true);
-        setIsLoggedIn(true);
       } else {
         setIsAuth(false);
-        setIsLoggedIn(false);
       }
     });
-  }, [isLoggedin, isAuth]);
+  }, [isAuth]);
 
   // TODO: DB read one-time. also think about how to integrate with localStorage
   // useEffect(()=> {
@@ -63,10 +60,8 @@ export default function Index() {
   // TODO: DB write?
   return (
     <>
-      {!isLoggedin && <LoginPage setIsLoggedIn={setIsLoggedIn} />}
       {isAuth && (
         <div className="flex flex-col max-h-screen">
-          <Header setIsLoggedIn={setIsLoggedIn}></Header>
           <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
             <Sidebar
               projects={projects}

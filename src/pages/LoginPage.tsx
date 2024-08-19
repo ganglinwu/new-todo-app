@@ -1,13 +1,12 @@
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-type LoginPageProps = {
-  setIsLoggedIn: React.Dispatch<SetStateAction<boolean>>;
-};
-
-export default function LoginPage({ setIsLoggedIn }: LoginPageProps) {
+export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userNameInput, setUserNameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const navigate = useNavigate();
+
   return (
     <form>
       <input
@@ -52,8 +51,8 @@ export default function LoginPage({ setIsLoggedIn }: LoginPageProps) {
             }).then((res) => {
               if (res.ok) {
                 alert("Login successful");
-                setIsLoggedIn(true);
                 setIsSubmitting(false);
+                navigate("/");
               } else {
                 alert("Login unsuccessful, please check and try again");
                 setIsSubmitting(false);
