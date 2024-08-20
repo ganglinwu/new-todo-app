@@ -23,6 +23,9 @@ export default function Index() {
 
   // TODO: DB read one-time. also think about how to integrate with localStorage
   // useEffect(()=> {
+  //   const controller = new AbortController();
+  //   const signal = controller.signal
+  //
   //   setIsLoading(true)
   //   const fetchFromDB = async (){
   //     try {
@@ -36,6 +39,11 @@ export default function Index() {
   // }
   //     }
   //   }
+  //
+  //   return () => {
+  //     controller.abort()
+  //   }
+  //
   //   setIsLoading(false)
   // }, [])
   //
