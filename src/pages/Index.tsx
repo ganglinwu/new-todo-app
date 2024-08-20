@@ -11,8 +11,6 @@ export default function Index() {
   const [selectedProject, setSelectedProject] = useState("All Projects");
   const [userData, setUserData] = useState(() => initializeUserData());
   const [projects, setProjects] = useState(userData.projects);
-  const [token, setToken] = useState(); //JWT
-  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     let newUserData = {
@@ -22,21 +20,6 @@ export default function Index() {
     setUserData(newUserData);
     localStorage.setItem("userData", JSON.stringify(newUserData));
   }, [projects]);
-
-  useEffect(() => {
-    console.log("useEffect for isLoggedin isAuth check triggered");
-    fetch(`http://localhost:3001/auth`, {
-      method: "POST",
-      credentials: "include",
-    }).then((response) => {
-      if (response.ok) {
-        console.log("response from server: authorized");
-        setIsAuth(true);
-      } else {
-        setIsAuth(false);
-      }
-    });
-  }, [isAuth]);
 
   // TODO: DB read one-time. also think about how to integrate with localStorage
   // useEffect(()=> {
@@ -60,26 +43,24 @@ export default function Index() {
   // TODO: DB write?
   return (
     <>
-      {isAuth && (
-        <div className="flex flex-col max-h-screen">
-          <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
-            <Sidebar
-              projects={projects}
+      <div className="flex flex-col max-h-screen">
+        <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
+          <Sidebar
+            projects={projects}
+            selectedProject={selectedProject}
+            onSelect={setSelectedProject}
+            setProjects={setProjects}
+            userData={userData}
+            setUserData={setUserData}
+          ></Sidebar>
+          <div className="sticky top-0 z-10">
+            <MainContent
+              project={projects}
               selectedProject={selectedProject}
-              onSelect={setSelectedProject}
-              setProjects={setProjects}
-              userData={userData}
-              setUserData={setUserData}
-            ></Sidebar>
-            <div className="sticky top-0 z-10">
-              <MainContent
-                project={projects}
-                selectedProject={selectedProject}
-              ></MainContent>
-            </div>
+            ></MainContent>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

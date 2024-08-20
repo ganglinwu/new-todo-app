@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userNameInput, setUserNameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   return (
     <form>
@@ -38,29 +39,11 @@ export default function LoginPage() {
           e.preventDefault();
           setIsSubmitting(true);
           try {
-            fetch("http://localhost:3001/login", {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                userName: userNameInput,
-                password: passwordInput,
-              }),
-            }).then((res) => {
-              if (res.ok) {
-                alert("Login successful");
-                setIsSubmitting(false);
-                navigate("/");
-              } else {
-                alert("Login unsuccessful, please check and try again");
-                setIsSubmitting(false);
-              }
-            });
+            login(userNameInput, passwordInput);
           } catch (error) {
             console.error(error);
             alert("Something went wrong, please try again");
+          } finally {
             setIsSubmitting(false);
           }
         }}

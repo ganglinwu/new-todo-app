@@ -5,7 +5,7 @@ import { Button } from "../../../@/components/ui/button";
 import logo from "../../../public/1.webp";
 
 export default function Header() {
-  const { logout } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
   return (
     <div className="grid grid-cols-3 md:grid-cols-4 pt-4 md:pt-6">
       <div className="flex justify-center items-center">
@@ -26,6 +26,7 @@ export default function Header() {
           </Button>
         </Link>
       </div>
+      {user.username && <p>Welcome, {user.username}</p>}
     </div>
   );
 }
