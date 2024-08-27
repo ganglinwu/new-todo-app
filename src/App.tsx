@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import LoginPage from "./pages/LoginPage";
+import Error404 from "./pages/Error404";
 import Header from "./layout/header/Header";
 import { UserContext } from "./context/userContext";
 import PrivateRoute from "./PrivateRoute";
@@ -35,7 +36,7 @@ export default function App() {
       setUser({ username: jsonResponse.username, email: jsonResponse.email });
       alert("Login success!");
       setIsAuth(true);
-      // location.state?.from ? navigate(location.state.from) : navigate("/");
+      location.state?.from ? navigate(location.state.from) : navigate("/");
       navigate("/");
     } else {
       alert("Login unsuccessful, please check and try again");
@@ -55,6 +56,7 @@ export default function App() {
     <UserContext.Provider value={{ user, login, logout, isAuth, setIsAuth }}>
       <Header />
       <Routes>
+        <Route path="*" element={<Error404 />} />
         <Route path="/login" element={<LoginPage />}></Route>
         <Route
           path="/"
