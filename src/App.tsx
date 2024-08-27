@@ -56,7 +56,14 @@ export default function App() {
     <UserContext.Provider value={{ user, login, logout, isAuth, setIsAuth }}>
       <Header />
       <Routes>
-        <Route path="*" element={<Error404 />} />
+        <Route
+          path="*"
+          element={
+            <PrivateRoute>
+              <Error404 />
+            </PrivateRoute>
+          }
+        ></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route
           path="/"
