@@ -1,51 +1,51 @@
 // layout component imports
-import Header from "../layout/header/Header.tsx";
 import MainContent from "../layout/maincontent/MainContent.tsx";
 import Sidebar from "../layout/sidebar/Sidebar.tsx";
-import LoginPage from "../pages/LoginPage.tsx";
 
 import { useState, useEffect } from "react";
 import { initializeUserData } from "../utils/initializeUserData.ts";
 
+import { assertIsData } from "../utils/assertIsData.ts";
+import { userData } from "../types";
+
 export default function Index() {
   const [selectedProject, setSelectedProject] = useState("All Projects");
-  const [userData, setUserData] = useState(() => initializeUserData());
+  const [userData, setUserData] = useState();
   const [projects, setProjects] = useState(userData.projects);
 
-  useEffect(() => {
-    let newUserData = {
-      userName: userData.userName,
-      projects: projects,
-    };
-    setUserData(newUserData);
-    localStorage.setItem("userData", JSON.stringify(newUserData));
-  }, [projects]);
+  // useEffect(() => {
+  //   let newUserData = {
+  //     userName: userData.userName,
+  //     projects: projects,
+  //   };
+  //   setUserData(newUserData);
+  //   localStorage.setItem("userData", JSON.stringify(newUserData));
+  // }, [projects]);
 
   // TODO: DB read one-time. also think about how to integrate with localStorage
-  // useEffect(()=> {
-  //   const controller = new AbortController();
-  //   const signal = controller.signal
-  //
-  //   setIsLoading(true)
-  //   const fetchFromDB = async (){
-  //     try {
-  //     const res = await fetch("")
-  //     const data = await res.json()
-  //     // typecheck data from DB
-  //     if (typeof data === userData) {
-  //     setUserData(data)
-  // } catch (err) {
-  // return <div>something went wrong<div>
-  // }
-  //     }
-  //   }
-  //
-  //   return () => {
-  //     controller.abort()
-  //   }
-  //
-  //   setIsLoading(false)
-  // }, [])
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3001/api/data", {
+        method: "GET",
+        credentials: "include",
+        signal: signal,
+      });
+      const data = await res.json();
+      return data;
+    };
+    // TODO: assert fetched data has right shape
+    // const fetchedUserData = assertIsData(fetchData().then());
+    // setUserData(fetchedUserData);
+
+    fetchData().then((data) => setUserData(data));
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
   //
   //TODO: cache DB read?
   // TODO: DB write?

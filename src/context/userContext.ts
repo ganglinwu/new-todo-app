@@ -21,3 +21,6 @@ export const UserContext = createContext<userContextType>({
   isAuth: false,
   setIsAuth: () => {},
 });
+
+//TODO: zod object of userData shape
+//TODO: userData to be included in UserContext
