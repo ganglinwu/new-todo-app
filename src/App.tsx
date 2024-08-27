@@ -14,6 +14,8 @@ export default function App() {
     email: string | null;
   }>({ username: null, email: null });
 
+  const [isAuth, setIsAuth] = useState(false);
+
   const location = useLocation();
 
   const login = async (username: string, password: string) => {
@@ -32,6 +34,7 @@ export default function App() {
       const jsonResponse = await res.json();
       setUser({ username: jsonResponse.username, email: jsonResponse.email });
       alert("Login success!");
+      setIsAuth(true);
       // location.state?.from ? navigate(location.state.from) : navigate("/");
       navigate("/");
     } else {
@@ -45,10 +48,11 @@ export default function App() {
       credentials: "include",
     });
     setUser({ username: null, email: null });
+    setIsAuth(false);
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, isAuth, setIsAuth }}>
       <Header />
       <Routes>
         <Route path="/login" element={<LoginPage />}></Route>

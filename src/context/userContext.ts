@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { SetStateAction, createContext } from "react";
 
 type userContextType = {
   user: {
@@ -7,6 +7,8 @@ type userContextType = {
   };
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
+  isAuth: boolean;
+  setIsAuth: React.Dispatch<SetStateAction<boolean>>;
 };
 // createContext takes in 1 argument for "default values" of context values
 export const UserContext = createContext<userContextType>({
@@ -16,4 +18,6 @@ export const UserContext = createContext<userContextType>({
   },
   login: () => Promise.resolve(),
   logout: () => {},
+  isAuth: false,
+  setIsAuth: () => {},
 });
