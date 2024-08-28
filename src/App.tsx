@@ -15,6 +15,10 @@ export default function App() {
     email: string | null;
   }>({ username: null, email: null });
 
+  const [userData, setUserData] = useState({
+    userName: "",
+  });
+
   const [isAuth, setIsAuth] = useState(false);
 
   const location = useLocation();
@@ -53,7 +57,9 @@ export default function App() {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, isAuth, setIsAuth }}>
+    <UserContext.Provider
+      value={{ user, login, logout, isAuth, setIsAuth, userData, setUserData }}
+    >
       <Header />
       <Routes>
         <Route

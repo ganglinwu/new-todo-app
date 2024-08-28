@@ -2,15 +2,15 @@
 import MainContent from "../layout/maincontent/MainContent.tsx";
 import Sidebar from "../layout/sidebar/Sidebar.tsx";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { initializeUserData } from "../utils/initializeUserData.ts";
 
 import { assertIsData } from "../utils/assertIsData.ts";
-import { userData } from "../types";
+import { UserContext } from "../context/userContext.ts";
 
 export default function Index() {
   const [selectedProject, setSelectedProject] = useState("All Projects");
-  const [userData, setUserData] = useState();
+  const { userData, setUserData } = useContext(UserContext);
   const [projects, setProjects] = useState(userData.projects);
 
   // useEffect(() => {
@@ -36,11 +36,15 @@ export default function Index() {
       const data = await res.json();
       return data;
     };
-    // TODO: assert fetched data has right shape
-    // const fetchedUserData = assertIsData(fetchData().then());
-    // setUserData(fetchedUserData);
 
-    fetchData().then((data) => setUserData(data));
+    fetchData().then((data) => {
+      try {
+        assertIsData(data);
+        setUserData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    });
 
     return () => {
       controller.abort();

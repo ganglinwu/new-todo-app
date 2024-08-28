@@ -1,4 +1,5 @@
 import { SetStateAction, createContext } from "react";
+import { z } from "zod";
 
 type userContextType = {
   user: {
@@ -9,6 +10,8 @@ type userContextType = {
   logout: () => void;
   isAuth: boolean;
   setIsAuth: React.Dispatch<SetStateAction<boolean>>;
+  userData: userData;
+  setUserData: React.Dispatch<SetStateAction<userData>>;
 };
 // createContext takes in 1 argument for "default values" of context values
 export const UserContext = createContext<userContextType>({
