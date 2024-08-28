@@ -19,13 +19,11 @@ export default function PrivateRoute({ children }: PrivateRouteProps) {
         credentials: "include",
         signal: signal,
       });
-      console.log(`printing response: ${res}`);
       return res;
     };
     fetchData()
       .then((res) => {
         if (res.ok) {
-          console.log("res is ok");
           setIsAuth(true);
         } else {
           setIsAuth(false);
