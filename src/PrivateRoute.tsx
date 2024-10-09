@@ -9,16 +9,15 @@ export default function PrivateRoute() {
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:3001/refresh", {
-        method: "GET",
-        credentials: "include",
-        signal: signal,
-      });
-      return res;
-    };
-    fetchData()
-      .then((res) => {
+    console.log("PrivateRoute useEffect triggered");
+    const refresh = async () => {
+      console.log("attempting fetch");
+      try {
+        const res = await fetch("http://localhost:3001/refresh", {
+          method: "GET",
+          credentials: "include",
+          signal: signal,
+        });
         if (res.ok) {
           setIsAuth(true);
         } else {
@@ -27,11 +26,15 @@ export default function PrivateRoute() {
             "You are not authorised to view this page, please log in with the valid credentials for access.",
           );
         }
-      })
-      .catch((err) => console.error(err));
-    // return () => {
-    //   controller.abort();
-    // };
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    refresh().then(() => {
+      return () => {
+        controller.abort();
+      };
+    });
   }, []);
   return isAuth ? <Outlet /> : <NotAuthorised />;
 }
