@@ -1,13 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { UserContext } from "./context/userContext";
+import { Outlet } from "react-router-dom";
 
-type PrivateRouteProps = {
-  children: React.ReactNode;
-};
-
-export default function PrivateRoute({ children }: PrivateRouteProps) {
-  const location = useLocation();
+export default function PrivateRoute() {
   const { isAuth, setIsAuth } = useContext(UserContext);
 
   useEffect(() => {
@@ -37,9 +33,5 @@ export default function PrivateRoute({ children }: PrivateRouteProps) {
     //   controller.abort();
     // };
   }, []);
-  return isAuth ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/login" replace state={{ from: location }} />
-  );
+  return isAuth ? <Outlet /> : <NotAuthorised />;
 }

@@ -62,19 +62,11 @@ export default function App() {
     >
       <Header />
       <Routes>
-        <Route
-          path="*"
-          element={
-            <PrivateRoute>
-              <Error404 />
-            </PrivateRoute>
-          }
-        ></Route>
         <Route path="/login" element={<LoginPage />}></Route>
-        <Route
-          path="/"
-          element={<PrivateRoute children={<Index />}></PrivateRoute>}
-        ></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/index" element={<Index />} />
+          <Route path="*" element={<Error404 />} />
+        </Route>
       </Routes>
     </UserContext.Provider>
   );
