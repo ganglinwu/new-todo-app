@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
 import { UserContext } from "./context/userContext";
+import NotAuthorised from "./pages/NotAuthorised";
 import { Outlet } from "react-router-dom";
 
 export default function PrivateRoute() {
@@ -36,5 +36,6 @@ export default function PrivateRoute() {
       };
     });
   }, []);
+  console.log(isAuth);
   return isAuth ? <Outlet /> : <NotAuthorised />;
 }

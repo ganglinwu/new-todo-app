@@ -46,9 +46,9 @@ export default function Index() {
       }
     });
 
-    return () => {
-      controller.abort();
-    };
+    // return () => {
+    //   controller.abort();
+    // };
   }, []);
   //
   //TODO: cache DB read?

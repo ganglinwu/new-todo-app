@@ -39,9 +39,8 @@ export default function App() {
       const jsonResponse = await res.json();
       setUser({ username: jsonResponse.username, email: jsonResponse.email });
       alert("Login success!");
-
-      redirect("/");
-      console.log("redirected");
+      setIsAuth(true);
+      location.state?.from ? navigate(location.state.from) : navigate("/index");
     } else {
       alert("Login unsuccessful, please check and try again");
     }
