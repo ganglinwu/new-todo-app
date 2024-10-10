@@ -1,100 +1,83 @@
-// layout component imports
-import Header from "./layout/header/Header.tsx";
-import MainContent from "./layout/maincontent/MainContent.tsx";
-import Sidebar from "./layout/sidebar/Sidebar.tsx";
-import Loading from "./layout/loadingpage/Loading.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import { useState } from "react";
+import {
+  useLocation,
+  useNavigate,
+  redirect,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Index from "./pages/Index";
+import LoginPage from "./pages/LoginPage";
+import Error404 from "./pages/Error404";
+import Header from "./layout/header/Header";
+import { UserContext } from "./context/userContext";
+import PrivateRoute from "./PrivateRoute";
 
-import { useState, useEffect } from "react";
-import { initializeUserData } from "./utils/initializeUserData.ts";
+export default function App() {
+  const [user, setUser] = useState<{
+    username: string | null;
+    email: string | null;
+  }>({ username: null, email: null });
 
-function App() {
-  const [selectedProject, setSelectedProject] = useState("All Projects");
-  const [userData, setUserData] = useState(() => initializeUserData());
-  const [projects, setProjects] = useState(userData.projects);
-  const [isLoading, setIsLoading] = useState(false);
-  const [token, setToken] = useState(); //JWT
+  const [userData, setUserData] = useState({
+    userName: "",
+  });
+
   const [isAuth, setIsAuth] = useState(false);
-  const [isLoggedin, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    let newUserData = {
-      userName: userData.userName,
-      timeUpdated: new Date(),
-      projects: projects,
-    };
-    setUserData(newUserData);
-    localStorage.setItem("userData", JSON.stringify(newUserData));
-  }, [projects]);
-
-  useEffect(() => {
-    console.log("useEffect for isLoggedin isAuth check triggered");
-    fetch(`http://localhost:3001/auth`, {
+  const login = async (username: string, password: string) => {
+    const res = await fetch("http://localhost:3001/login", {
       method: "POST",
       credentials: "include",
-    }).then((response) => {
-      if (response.ok) {
-        console.log("response from server: authorized");
-        setIsAuth(true);
-        setIsLoggedIn(true);
-      } else {
-        setIsAuth(false);
-        setIsLoggedIn(false);
-      }
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: username,
+        password: password,
+      }),
     });
-  }, [isLoggedin, isAuth]);
+    if (res.ok) {
+      const jsonResponse = await res.json();
+      setUser({ username: jsonResponse.username, email: jsonResponse.email });
+      alert("Login success!");
+      setIsAuth(true);
+      location.state?.from ? navigate(location.state.from) : navigate("/index");
+    } else {
+      alert("Login unsuccessful, please check and try again");
+    }
+  };
 
-  // TODO: DB read one-time. also think about how to integrate with localStorage
-  // useEffect(()=> {
-  //   setIsLoading(true)
-  //   const fetchFromDB = async (){
-  //     try {
-  //     const res = await fetch("")
-  //     const data = await res.json()
-  //     // typecheck data from DB
-  //     if (typeof data === userData) {
-  //     setUserData(data)
-  // } catch (err) {
-  // return <div>something went wrong<div>
-  // }
-  //     }
-  //   }
-  //   setIsLoading(false)
-  // }, [])
-  //
-  //TODO: cache DB read?
-  // TODO: DB write?
+  const logout = async () => {
+    const res = await fetch("http://localhost:3001/logout", {
+      method: "GET",
+      credentials: "include",
+    });
 
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
+    if (res.ok) {
+      setUser({ username: null, email: null });
+      redirect("/login");
+      setIsAuth(false);
+      console.log("logged out");
+    } else {
+      alert("logout failed, do try again later");
+    }
+  };
 
   return (
-    <>
-      {!isLoggedin && <LoginPage setIsLoggedIn={setIsLoggedIn} />}
-      {isAuth && (
-        <div className="flex flex-col max-h-screen">
-          <Header setIsLoggedIn={setIsLoggedIn}></Header>
-          <div className="grid grid-cols-[40%_60%] md:grid-cols-[20%_80%] overflow-auto whitespace-nowrap">
-            <Sidebar
-              projects={projects}
-              selectedProject={selectedProject}
-              onSelect={setSelectedProject}
-              setProjects={setProjects}
-              userData={userData}
-              setUserData={setUserData}
-            ></Sidebar>
-            <div className="sticky top-0 z-10">
-              <MainContent
-                project={projects}
-                selectedProject={selectedProject}
-              ></MainContent>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <UserContext.Provider
+      value={{ user, login, logout, isAuth, setIsAuth, userData, setUserData }}
+    >
+      <Header />
+      <Routes>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/index" element={<Index />} />
+          <Route path="*" element={<Error404 />} />
+        </Route>
+      </Routes>
+    </UserContext.Provider>
   );
 }
-
-export default App;

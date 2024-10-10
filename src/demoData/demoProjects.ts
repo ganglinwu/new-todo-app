@@ -96,6 +96,5 @@ export const demoProjects: projects[] = [
 
 export const demoUserData: userData = {
   userName: "test",
-  timeUpdated: new Date("2020-03-20"),
   projects: demoProjects,
 };

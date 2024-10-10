@@ -26,7 +26,6 @@ export function deleteAllProj(
     );
     const emptyUserData: userData = {
       userName: userData.userName,
-      timeUpdated: confirmErase ? new Date("03-26-1985") : new Date(),
       projects: [],
     };
     setUserData(emptyUserData);

@@ -8,14 +8,6 @@ export function initializeUserData(): userData {
     const dataString = localStorage.getItem("userData");
     if (dataString) {
       const localStorageUserData = dateParser(JSON.parse(dataString));
-      const timeDiff =
-        localStorageUserData.timeUpdated.getTime() -
-        demoUserData.timeUpdated.getTime();
-      if (timeDiff > 0) {
-        return localStorageUserData;
-      } else {
-        return demoUserData;
-      }
     } else {
       alert("Local storage is empty, proceeding to load demodata");
     }
