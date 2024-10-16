@@ -11,17 +11,14 @@ import LoginPage from "./pages/LoginPage";
 import Error404 from "./pages/Error404";
 import Header from "./layout/header/Header";
 import { UserContext } from "./context/userContext";
+import { UserContextProvider } from "./context/UserContext.tsx";
 import PrivateRoute from "./PrivateRoute";
 
 export default function App() {
   const [user, setUser] = useState<{
-    username: string | null;
+    userName: string | null;
     email: string | null;
-  }>({ username: null, email: null });
-
-  const [userData, setUserData] = useState({
-    userName: "",
-  });
+  }>({ userName: null, email: null });
 
   const [isAuth, setIsAuth] = useState(false);
   const navigate = useNavigate();
@@ -41,7 +38,7 @@ export default function App() {
     });
     if (res.ok) {
       const jsonResponse = await res.json();
-      setUser({ username: jsonResponse.username, email: jsonResponse.email });
+      setUser({ userName: jsonResponse.username, email: jsonResponse.email });
       alert("Login success!");
       setIsAuth(true);
       location.state?.from ? navigate(location.state.from) : navigate("/index");
@@ -57,7 +54,7 @@ export default function App() {
     });
 
     if (res.ok) {
-      setUser({ username: null, email: null });
+      setUser({ userName: null, email: null });
       redirect("/login");
       setIsAuth(false);
       console.log("logged out");
@@ -67,8 +64,9 @@ export default function App() {
   };
 
   return (
+    <UserContextProvider fetchedUserData={user}>
     <UserContext.Provider
-      value={{ user, login, logout, isAuth, setIsAuth, userData, setUserData }}
+      value={{ user, login, logout, isAuth, setIsAuth}}
     >
       <Header />
       <Routes>
@@ -78,6 +76,6 @@ export default function App() {
           <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
-    </UserContext.Provider>
+    </UserContext.Provider></UserContextProvider>
   );
 }

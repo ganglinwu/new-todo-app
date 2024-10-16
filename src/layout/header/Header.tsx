@@ -26,7 +26,7 @@ export default function Header() {
           </Button>
         </Link>
       </div>
-      {user.username && <p>Welcome, {user.username}</p>}
+      {user.userName && <p>Welcome, {user.userName}</p>}
     </div>
   );
 }

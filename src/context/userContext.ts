@@ -3,30 +3,24 @@ import { z } from "zod";
 
 type userContextType = {
   user: {
-    username: string | null;
+    userName: string | null;
     email: string | null;
   };
-  login: (username: string, password: string) => Promise<void>;
+  login: (userName: string, password: string) => Promise<void>;
   logout: () => void;
   isAuth: boolean;
   setIsAuth: React.Dispatch<SetStateAction<boolean>>;
-  userData: userData;
-  setUserData: React.Dispatch<SetStateAction<userData>>;
 };
 // createContext takes in 1 argument for "default values" of context values
 export const UserContext = createContext<userContextType>({
   user: {
-    username: null,
+    userName: null,
     email: null,
   },
   login: () => Promise.resolve(),
   logout: () => {},
   isAuth: false,
   setIsAuth: () => {},
-  userData: {
-    userName: "",
-  },
-  setUserData: () => {},
 });
 
 export const taskSchema = z.object({
